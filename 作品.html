@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的作品 - 超记</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .logo .code { color: #ff6700; } 
+    .logo .blog { color: #0088ff; }  
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    .nav-list a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+    }
+    .nav-list a:hover, .nav-list a.active {
+      color: #ff6700; 
+      transition: color 0.2s ease;
+    }
+    body {
+      background-color: #f3f3f3;
+      min-height: 100vh;
+      padding-top: 80px;
+      scroll-behavior: smooth;
+    }
+
+    .works-container {
+      padding: 60px 5%;
+      background-color: #fff;
+    }
+    .section-title {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 40px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ff6700;
+    }
+
+    .works-filter {
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .filter-btn {
+      padding: 10px 20px;
+      background-color: #f5f5f5;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background-color: #ff6700;
+      color: #fff;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    .project-card {
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    .project-cover {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    .project-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-cover img {
+      transform: scale(1.05);
+    }
+    .project-info {
+      padding: 20px;
+    }
+    .project-title {
+      font-size: 1.3rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .project-desc {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .project-tag {
+      padding: 5px 12px;
+      background-color: #f0f2f5;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .project-links {
+      display: flex;
+      gap: 15px;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      color: #ff6700;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .project-link:hover {
+      color: #e05a00;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 40px 5%;
+      text-align: center;
+    }
+    .footer-copyright {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .footer-record {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 30px;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-social a {
+      color: #ccc;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .footer-social a:hover { color: #ff6700;  }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 20px;
+      }
+      .nav-list { gap: 15px; }
+      body { padding-top: 130px; }
+      .works-container { padding: 30px 20px; }
+      .section-title { font-size: 2rem; }
+      .works-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <span class="code">超</span><span class="blog">记</span>
+    </div>
+    <ul class="nav-list">
+      <li><a href="首页.html">首页</a></li>
+      <li><a href="./作品.html" class="active">作品</a></li>
+      <li><a href="关于我.html">关于我</a></li>
+      <li><a href="生活日常.html">生活日常</a></li>
+    </ul>
+  </nav>
+
+  <div class="works-container">
+    <h2 class="section-title">我的作品</h2>
+
+    <div class="works-filter">
+      <button class="filter-btn active" data-category="all">全部作品</button>
+      <button class="filter-btn" data-category="movie">电影作品</button>
+      <button class="filter-btn" data-category="variety">综艺作品</button>
+      <button class="filter-btn" data-category="direct">导演作品</button>
+    </div>
+
+    <div class="works-grid">
+      <div class="project-card" data-category="movie">
+        <div class="project-cover">
+          <img src="R-C.jpg" alt="《烈日灼心》封面">
+        </div>
+        <div class="project-info">
+          <h3 class="project-title">《烈日灼心》</h3>
+          <p class="project-desc">饰演辛小丰，凭借该角色斩获金鸡奖、百花奖最佳男主角，展现复杂人性的挣扎与救赎。</p>
+          <div class="project-tags">
+            <span class="project-tag">电影</span>
+            <span class="project-tag">剧情</span>
+            <span class="project-tag">悬疑</span>
+          </div>
+          <div class="project-links">
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-play"></i> 在线观看</a>
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-info"></i> 作品详情</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="variety">
+        <div class="project-cover">
+          <img src="t019e037f6cd07c387e.jpg" alt="《奔跑吧兄弟》封面">
+        </div>
+        <div class="project-info">
+          <h3 class="project-title">《奔跑吧兄弟》系列</h3>
+          <p class="project-desc">担任常驻MC，以幽默风趣的表现打造国民级综艺，传递欢乐与团队精神。</p>
+          <div class="project-tags">
+            <span class="project-tag">综艺</span>
+            <span class="project-tag">真人秀</span>
+            <span class="project-tag">搞笑</span>
+          </div>
+          <div class="project-links">
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-play"></i> 在线观看</a>
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-info"></i> 作品详情</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="direct">
+        <div class="project-cover">
+          <img src="t01bf0a319c3427f2cd.jpg" alt="《分手大师》封面">
+        </div>
+        <div class="project-info">
+          <h3 class="project-title">《分手大师》</h3>
+          <p class="project-desc">导演处女作，融合喜剧与爱情元素，以夸张幽默的风格斩获6.6亿票房。</p>
+          <div class="project-tags">
+            <span class="project-tag">电影</span>
+            <span class="project-tag">喜剧</span>
+            <span class="project-tag">导演</span>
+          </div>
+          <div class="project-links">
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-play"></i> 在线观看</a>
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-info"></i> 作品详情</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="movie">
+        <div class="project-cover">
+          <img src="OIP-C.webp" alt="《影》封面">
+        </div>
+        <div class="project-info">
+          <h3 class="project-title">《影》</h3>
+          <p class="project-desc">一人分饰两角“子虞/境州”，以水墨美学风格演绎权谋与替身的挣扎，入围威尼斯电影节。</p>
+          <div class="project-tags">
+            <span class="project-tag">电影</span>
+            <span class="project-tag">古装</span>
+            <span class="project-tag">艺术</span>
+          </div>
+          <div class="project-links">
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-play"></i> 在线观看</a>
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-info"></i> 作品详情</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-category="direct">
+        <div class="project-cover">
+          <img src="R-C (1).jpg" alt="《恶棍天使》封面">
+        </div>
+        <div class="project-info">
+          <h3 class="project-title">《恶棍天使》</h3>
+          <p class="project-desc">导演兼主演，延续喜剧风格，讲述奇葩搭档的冒险故事，票房突破6.4亿。</p>
+          <div class="project-tags">
+            <span class="project-tag">电影</span>
+            <span class="project-tag">喜剧</span>
+            <span class="project-tag">导演</span>
+          </div>
+          <div class="project-links">
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-play"></i> 在线观看</a>
+            <a href="javascript:;" class="project-link"><i class="fa-solid fa-info"></i> 作品详情</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-copyright">© 2026 邓超个人博客 版权所有</p>
+    <p class="footer-record">沪ICP备12345678号-1</p>
+    <div class="footer-social">
+      <a href="javascript:;"><i class="fa-brands fa-weibo"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-wechat"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-instagram"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-douyin"></i></a>
+      <a href="javascript:;"><i class="fa-solid fa-film"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        
+        filterBtns.forEach(item => item.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.dataset.category;
+        projectCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

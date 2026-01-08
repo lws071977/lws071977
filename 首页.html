@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>超哥的日常 - 邓超个人博客</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .logo .code { color: #ff6700; } 
+    .logo .blog { color: #0088ff; }  
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    .nav-list a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+    }
+    .nav-list a:hover, .nav-list a.active {
+      color: #ff6700; 
+      transition: color 0.2s ease;
+    }
+    body {
+      background-color: #f3f3f3;
+      min-height: 100vh;
+      padding-top: 80px;
+      scroll-behavior: smooth;
+    }
+    .profile-container {
+      display: flex;
+      align-items: center;
+      background-color: #ffe8d6; 
+      padding: 60px 5%;
+      border-radius: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      gap: 40px;
+      min-height: 450px;
+    }
+    .profile-text { flex: 1; }
+    .profile-title {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #333;
+      line-height: 1.2;
+    }
+    .profile-title span { color: #ff6700; } 
+    .profile-desc {
+      font-size: 1.1rem;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #ff6700; 
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover { background-color: #e05a00; } 
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .social-icons a {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #f0f2f5;
+      justify-content: center;
+      align-items: center;
+      color: #666;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    .social-icons a:hover {
+      background-color: #ff6700; 
+      color: #fff;
+    }
+    .profile-img {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 8px solid #fff;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      animation: float 4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+    .article-list-page {
+      padding: 60px 5%;
+      background-color: #fff;
+      display: flex;
+      gap: 40px;
+    }
+    .page-header {
+      width: 100%;
+      padding: 0 5% 20px;
+      background-color: #fff;
+    }
+    .page-title {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .page-desc {
+      color: #666;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .filter-area {
+      margin: 20px 0;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      background-color: #f5f5f5;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background-color: #ff6700; 
+      color: #fff;
+    }
+    .filter-select {
+      padding: 8px 16px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+    .article-list-area { flex: 3; }
+    .article-item {
+      padding: 25px;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.2s ease;
+    }
+    .article-item:hover { background-color: #f9f9f9; }
+    .article-item-title {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 10px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.2s ease;
+    }
+    .article-item-title:hover { color: #ff6700; }
+    .article-item-meta {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .article-item-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .article-item-excerpt {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .article-item-stats {
+      display: flex;
+      gap: 20px;
+      color: #999;
+      font-size: 0.9rem;
+    }
+    .pagination-area {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .page-btn {
+      padding: 8px 14px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      background-color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      color: #333;
+      transition: all 0.2s ease;
+    }
+    .page-btn.active {
+      background-color: #ff6700; 
+      color: #fff;
+      border-color: #ff6700;
+    }
+    .page-btn:hover:not(.disabled) {
+      background-color: #ff6700; 
+      color: #fff;
+      border-color: #ff6700;
+    }
+    .page-btn.disabled {
+      background-color: #f5f5f5;
+      color: #ccc;
+      cursor: not-allowed;
+      border-color: #eee;
+      pointer-events: none;
+    }
+    .sidebar-area {
+      flex: 1;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .sidebar-title {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ff6700;
+    }
+    .hot-article-list { list-style: none; }
+    .hot-article-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed #eee;
+    }
+    .hot-article-item:last-child { border-bottom: none; }
+    .hot-article-link {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.95rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color 0.2s ease;
+    }
+    .hot-article-link:hover { color: #ff6700;  }
+    .category-stats { list-style: none; }
+    .category-item {
+      padding: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .category-name {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .category-name:hover { color: #ff6700; }
+    .category-count {
+      color: #999;
+      font-size: 0.9rem;
+    }
+    .tags-section {
+      padding: 80px 5%;
+      background-color: #f3f3f3;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #333;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background-color: #ff6700; 
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+    .tags-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .tag {
+      padding: 10px 20px;
+      background-color: #fff;
+      border-radius: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      color: #333;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .tag:hover {
+      background-color: #ff6700; 
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .tag.large {
+      font-size: 1.3rem;
+      padding: 12px 24px;
+    }
+    .tag.medium { font-size: 1.1rem; }
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 40px 5%;
+      text-align: center;
+    }
+    .footer-copyright {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .footer-record {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 30px;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-social a {
+      color: #ccc;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    .footer-social a:hover { color: #ff6700;  }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 20px;
+      }
+      .nav-list { gap: 15px; }
+      body { padding-top: 130px; }
+      .profile-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+        min-height: auto;
+      }
+      .profile-title { font-size: 2rem; }
+      .profile-img {
+        width: 200px;
+        height: 200px;
+      }
+      .social-icons { justify-content: center; }
+      .page-header, .article-list-page { padding: 30px 20px; }
+      .article-list-page { flex-direction: column; }
+      .section-title { font-size: 2rem; }
+      .footer { padding: 30px 20px; }
+      .tags-cloud { gap: 8px; }
+      .tag {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+      .filter-area { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <span class="code">超</span><span class="blog">记</span>
+    </div>
+    <ul class="nav-list">
+      <li><a href="./首页.html" class="active">首页</a></li>
+      <li><a href="./作品.html">作品</a></li>
+      <li><a href="./关于我.html">关于我</a></li>
+      <li><a href="./生活日常.html">生活日常</a></li>
+    </ul>
+  </nav>
+
+  <div class="profile-container">
+    <div class="profile-text">
+      <h1 class="profile-title">大家好，我是<span>邓超</span></h1>
+      <p class="profile-desc">演员、导演、跑男团团长，热爱生活，享受每一个精彩瞬间。用心演戏，用爱生活，用笑声感染身边的每一个人。</p>
+      <a href="javascript:;" class="btn">了解更多</a>
+      <div class="social-icons">
+        <a href="javascript:;"><i class="fa-brands fa-github"></i></a>
+        <a href="javascript:;"><i class="fa-brands fa-weibo"></i></a>
+        <a href="javascript:;"><i class="fa-brands fa-twitter"></i></a>
+        <a href="javascript:;"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="javascript:;"><i class="fa-solid fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="profile-img">
+      <img src="w640slw.jpg" alt="邓超"> 
+    </div>
+  </div>
+
+  <div class="page-header">
+    <h2 class="page-title">超哥的生活记录</h2>
+    <p class="page-desc">记录演艺、综艺、家庭与生活的所有感悟</p>
+  </div>
+
+  <div class="article-list-page">
+    <div class="article-list-area">
+      <div class="filter-area">
+        <div>
+          <span>分类筛选：</span>
+          <button class="filter-btn active" data-filter="all">全部</button>
+          <button class="filter-btn" data-filter="acting">演艺感悟</button>
+          <button class="filter-btn" data-filter="variety">综艺日常</button>
+          <button class="filter-btn" data-filter="family">家庭生活</button>
+        </div>
+        <div>
+          <span>标签筛选：</span>
+          <select class="filter-select" id="tagFilter">
+            <option value="">全部标签</option>
+            <option value="表演">表演</option>
+            <option value="跑男">跑男</option>
+            <option value="导演">导演</option>
+            <option value="家庭">家庭</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="article-list" id="articleList">
+        <div class="article-item" data-category="acting" data-tags="表演,演员">
+          <a href="article.html" class="article-item-title">演员的自我修养：用心诠释每一个角色</a>
+          <div class="article-item-meta">
+            <span><i class="fa-regular fa-calendar-days"></i> 2026-01-05</span>
+            <span><i class="fa-solid fa-folder-open"></i> 演艺感悟</span>
+            <span><i class="fa-solid fa-tags"></i> 表演, 演员</span>
+          </div>
+          <p class="article-item-excerpt">作为演员，每一个角色都是一次全新的生命体验。从《烈日灼心》到《影》，我始终相信只有真正走进角色的内心，才能呈现出有温度的表演。表演不是模仿，而是共情，是把自己完全交给角色...</p>
+          <div class="article-item-stats">
+            <span><i class="fa-regular fa-eye"></i> 1286 阅读</span>
+            <span><i class="fa-regular fa-comment"></i> 32 评论</span>
+          </div>
+        </div>
+
+        <div class="article-item" data-category="variety" data-tags="跑男,兄弟情">
+          <a href="article.html" class="article-item-title">跑男那些年：欢笑背后的兄弟情</a>
+          <div class="article-item-meta">
+            <span><i class="fa-regular fa-calendar-days"></i> 2026-01-03</span>
+            <span><i class="fa-solid fa-folder-open"></i> 综艺日常</span>
+            <span><i class="fa-solid fa-tags"></i> 跑男, 兄弟情</span>
+          </div>
+          <p class="article-item-excerpt">跑男陪伴了我和观众很多年，这个节目不仅仅是带给大家欢笑，更让我收获了珍贵的兄弟情谊。每一次录制，每一个游戏，都是我们真实情感的流露。从第一季到现在，不变的是那份初心...</p>
+          <div class="article-item-stats">
+            <span><i class="fa-regular fa-eye"></i> 952 阅读</span>
+            <span><i class="fa-regular fa-comment"></i> 24 评论</span>
+          </div>
+        </div>
+
+        <div class="article-item" data-category="acting" data-tags="导演,创作">
+          <a href="javascript:;" class="article-item-title">导演之路：从演员到创作者的转变</a>
+          <div class="article-item-meta">
+            <span><i class="fa-regular fa-calendar-days"></i> 2026-01-01</span>
+            <span><i class="fa-solid fa-folder-open"></i> 演艺感悟</span>
+            <span><i class="fa-solid fa-tags"></i> 导演, 创作</span>
+          </div>
+          <p class="article-item-excerpt">当导演和当演员是完全不同的体验，演员只需要专注于自己的角色，而导演需要掌控全局。《分手大师》《恶棍天使》，每一部作品都是一次学习和成长，我希望用自己的方式讲述有趣的故事...</p>
+          <div class="article-item-stats">
+            <span><i class="fa-regular fa-eye"></i> 768 阅读</span>
+            <span><i class="fa-regular fa-comment"></i> 18 评论</span>
+          </div>
+        </div>
+
+        <div class="article-item" data-category="family" data-tags="家庭,生活">
+          <a href="javascript:;" class="article-item-title">平衡：工作与家庭的生活智慧</a>
+          <div class="article-item-meta">
+            <span><i class="fa-regular fa-calendar-days"></i> 2025-12-28</span>
+            <span><i class="fa-solid fa-folder-open"></i> 家庭生活</span>
+            <span><i class="fa-solid fa-tags"></i> 家庭, 生活</span>
+          </div>
+          <p class="article-item-excerpt">作为演员和导演，工作总是很忙碌，但家庭永远是我最温暖的港湾。和孙俪一起陪伴孩子成长，是我人生中最重要的功课。工作再忙，也要留出时间给家人，因为生活的美好，在于平衡...</p>
+          <div class="article-item-stats">
+            <span><i class="fa-regular fa-eye"></i> 624 阅读</span>
+            <span><i class="fa-regular fa-comment"></i> 12 评论</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-area">
+        <a href="javascript:;" class="page-btn disabled">上一页</a>
+        <a href="javascript:;" class="page-btn active">1</a>
+        <a href="javascript:;" class="page-btn">2</a>
+        <a href="javascript:;" class="page-btn">3</a>
+        <a href="javascript:;" class="page-btn">下一页</a>
+      </div>
+    </div>
+
+    <div class="sidebar-area">
+      <div class="sidebar-module">
+        <h3 class="sidebar-title">热门文章</h3>
+        <ul class="hot-article-list">
+          <li class="hot-article-item">
+            <a href="article.html" class="hot-article-link">演员的自我修养：用心诠释每一个角色</a>
+          </li>
+          <li class="hot-article-item">
+            <a href="javascript:;" class="hot-article-link">跑男那些年：欢笑背后的兄弟情</a>
+          </li>
+          <li class="hot-article-item">
+            <a href="javascript:;" class="hot-article-link">导演之路：从演员到创作者的转变</a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-module" style="margin-top: 30px;">
+        <h3 class="sidebar-title">文章分类统计</h3>
+        <ul class="category-stats">
+          <li class="category-item">
+            <a href="javascript:;" class="category-name">演艺感悟</a>
+            <span class="category-count">12</span>
+          </li>
+          <li class="category-item">
+            <a href="javascript:;" class="category-name">综艺日常</a>
+            <span class="category-count">8</span>
+          </li>
+          <li class="category-item">
+            <a href="javascript:;" class="category-name">家庭生活</a>
+            <span class="category-count">5</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="tags-section">
+    <h2 class="section-title">兴趣与标签</h2>
+    <div class="tags-cloud">
+      <span class="tag large" data-tag="演员">演员</span>
+      <span class="tag large" data-tag="导演">导演</span>
+      <span class="tag medium" data-tag="跑男">跑男</span>
+      <span class="tag medium" data-tag="表演">表演</span>
+      <span class="tag" data-tag="喜剧">喜剧</span>
+      <span class="tag" data-tag="家庭">家庭</span>
+      <span class="tag" data-tag="创作">创作</span>
+      <span class="tag" data-tag="公益">公益</span>
+      <span class="tag" data-tag="音乐">音乐</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-copyright">© 2026 邓超个人博客 版权所有</p>
+    <p class="footer-record">沪ICP备12345678号-1</p>
+    <div class="footer-social">
+      <a href="javascript:;"><i class="fa-brands fa-weibo"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-wechat"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-instagram"></i></a>
+      <a href="javascript:;"><i class="fa-brands fa-douyin"></i></a>
+      <a href="javascript:;"><i class="fa-solid fa-film"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articleList = document.getElementById('articleList');
+    const articles = articleList.querySelectorAll('.article-item');
+    const tagFilter = document.getElementById('tagFilter');
+    const cloudTags = document.querySelectorAll('.tags-cloud .tag');
+
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(item => item.classList.remove('active'));
+        btn.classList.add('active');
+        
+        filterArticles(btn.dataset.filter, tagFilter.value);
+      });
+    });
+
+    
+    tagFilter.addEventListener('change', () => {
+      const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+      filterArticles(activeFilter, tagFilter.value);
+    });
+
+    
+    cloudTags.forEach(tag => {
+      tag.addEventListener('click', () => {
+        
+        tagFilter.value = tag.dataset.tag;
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        filterArticles(activeFilter, tag.dataset.tag);
+      });
+    });
+
+    
+    function filterArticles(categoryFilter, tagFilterVal) {
+      articles.forEach(article => {
+        const articleCategory = article.dataset.category;
+        const articleTags = article.dataset.tags.split(','); 
+
+        
+        const isCategoryMatch = categoryFilter === 'all' || articleCategory === categoryFilter;
+        
+        const isTagMatch = tagFilterVal === '' || articleTags.includes(tagFilterVal);
+
+        
+        article.style.display = isCategoryMatch && isTagMatch ? 'block' : 'none';
+      });
+    }
+
+    
+    filterArticles('all', '');
+  </script>
+</body>
+</html>
